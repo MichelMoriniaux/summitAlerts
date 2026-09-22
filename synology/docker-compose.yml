@@ -1,0 +1,17 @@
+# Compose file for Synology Container Manager (uses the pre-built imported image).
+services:
+  gate-monitor:
+    image: summit-gate-monitor:latest
+    container_name: summit-gate-monitor
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - gate-monitor-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "1m"
+        max-file: "3"
+
+volumes:
+  gate-monitor-data:

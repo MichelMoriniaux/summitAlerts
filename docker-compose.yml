@@ -1,0 +1,12 @@
+services:
+  gate-monitor:
+    build: .
+    image: summit-gate-monitor
+    container_name: summit-gate-monitor
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - gate-monitor-data:/data
+
+volumes:
+  gate-monitor-data:
