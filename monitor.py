@@ -23,12 +23,14 @@ import time
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
 AUTH_HOST = "https://ip-lib.summitcontrol.com:4000"
 API_HOST = "https://sierra-lib.summitcontrol.com:3000"
 USER_AGENT = "summit-gate-monitor/1.0"
+PACIFIC_TZ = ZoneInfo("America/Los_Angeles")
 
 log = logging.getLogger("summit")
 
@@ -188,7 +190,7 @@ def fmt_last_seen(device):
         return "N/A"
     mins = (datetime.now(timezone.utc) - ts).total_seconds() / 60
     ago = f"{mins:.0f} min ago" if mins < 120 else f"{mins / 60:.1f} h ago"
-    return f"{ts.astimezone().strftime('%Y-%m-%d %H:%M %Z')} ({ago})"
+    return f"{ts.astimezone(PACIFIC_TZ).strftime('%Y-%m-%d %H:%M %Z')} ({ago})"
 
 
 class Mailer:
